@@ -1,9 +1,10 @@
-package com.example.buffsports
+package com.example.buffsports.modules.buff.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.buffsports.R
 
-class MainActivity : AppCompatActivity() {
+class BuffActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
