@@ -22,8 +22,11 @@ data class BuffResponse(
         val language: String
     ) {
         data class Author(
+            @SerializedName("first_name")
             val firstName: String,
-            val lastName: String
+            @SerializedName("last_name")
+            val lastName: String,
+            val image: String
         )
 
         data class Question(

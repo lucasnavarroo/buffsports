@@ -57,6 +57,9 @@ class BuffActivity : AppCompatActivity() {
             })
 
             buff.observe(this@BuffActivity, Observer { buff ->
+                buffQuestion.text = buff.question.title
+                buffName.text = "${buff.author.firstName} ${buff.author.lastName}"
+                buffTimer.text = buff.timeToShow.toString()
                 buffAnswersAdapter.refresh(buff.answers)
             })
         }
