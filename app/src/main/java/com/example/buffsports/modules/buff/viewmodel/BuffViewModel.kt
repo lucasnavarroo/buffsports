@@ -9,14 +9,18 @@ import com.example.buffsports.modules.buff.model.BuffResponse
 class BuffViewModel : ViewModel() {
 
     var buff: MutableLiveData<BuffResponse.Buff> = MutableLiveData()
+    val buffVisibility: MutableLiveData<Boolean> = MutableLiveData()
 
     val onLoadFinished = SingleLiveEvent<Void>()
     val onError = SingleLiveEvent<String>()
 
     var currentBuff = 1
 
-    fun initBuffs() {
-        getBuff(
+    var isPlaying = false
+    var timer = -1
+
+    fun getBuff() {
+        BuffBusiness.getBuff(
             currentBuff.toString(),
             onSuccess = { buff ->
                 this.buff.value = buff
@@ -29,21 +33,7 @@ class BuffViewModel : ViewModel() {
         )
     }
 
-    private fun getBuff(
-        buffId: String,
-        onSuccess: (buff: BuffResponse.Buff) -> Unit,
-        onError: (errorMessage: String) -> Unit
-    ) {
-        BuffBusiness.getBuff(
-            buffId,
-            onSuccess = { buff ->
-                onSuccess(buff)
-            },
-            onError = { errorMessage ->
-                onError(errorMessage)
-            }
-        )
+    fun checkBuffState() {
+        buffVisibility.value = isPlaying && timer >=0
     }
 }
-
-

@@ -26,11 +26,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/buffCard"
         android:layout_width="252dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
         android:background="@android:color/transparent"
+        android:visibility="gone"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
