@@ -1,4 +1,4 @@
-package com.example.buffsports.modules.buff.movieApi
+package com.example.buffsports.modules.buff.repository
 
 import com.example.buffsports.modules.buff.model.BuffResponse
 import io.reactivex.Observable
