@@ -10,13 +10,13 @@ class BuffViewModel : ViewModel() {
 
     var buff: MutableLiveData<BuffResponse.Buff> = MutableLiveData()
     var shouldShowBuff: MutableLiveData<Boolean> = MutableLiveData()
-    var timer = -1
 
     val onLoadFinished = SingleLiveEvent<Void>()
     val onError = SingleLiveEvent<String>()
 
     var currentBuff = 1
-    var isPlaying = false
+    var isStreamPlaying = false
+    var timer = -1
 
     fun getBuff() {
         BuffBusiness.getBuff(
@@ -35,6 +35,6 @@ class BuffViewModel : ViewModel() {
     }
 
     fun checkBuffState() {
-        shouldShowBuff.value = isPlaying && timer >= 0
+        shouldShowBuff.value = isStreamPlaying && timer >= 0
     }
 }

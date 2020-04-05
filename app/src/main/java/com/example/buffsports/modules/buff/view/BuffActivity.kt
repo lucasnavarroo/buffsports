@@ -39,7 +39,7 @@ class BuffActivity : AppCompatActivity() {
             setVideoPath("https://buffup-public.s3.eu-west-2.amazonaws.com/video/toronto+nba+cut+3.mp4")
             start()
             setOnPreparedListener() {
-                buffViewModel.isPlaying = true
+                buffViewModel.isStreamPlaying = true
                 buffViewModel.checkBuffState()
             }
         }
@@ -52,7 +52,7 @@ class BuffActivity : AppCompatActivity() {
         }
 
         buffClose.setOnClickListener {
-            buffViewModel.shouldShowBuff.value = false
+            stopTimer()
         }
     }
 
@@ -105,14 +105,14 @@ class BuffActivity : AppCompatActivity() {
 
     private fun startTimer() {
         countDownBuffTimer =
-            object : CountDownTimer(buffViewModel.timer.toLong() * 1000 + 1000, 1000) {
+            object : CountDownTimer(buffViewModel.timer.toLong() * 1000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     buffTimer.text = (millisUntilFinished / 1000).toString()
                 }
 
                 override fun onFinish() {
                     buffViewModel.timer = -1
-                    buffViewModel.shouldShowBuff.value = false
+                    buffViewModel.checkBuffState()
                 }
             }
         countDownBuffTimer.start()
@@ -120,5 +120,6 @@ class BuffActivity : AppCompatActivity() {
 
     private fun stopTimer() {
         countDownBuffTimer.onFinish()
+        countDownBuffTimer.cancel()
     }
 }
