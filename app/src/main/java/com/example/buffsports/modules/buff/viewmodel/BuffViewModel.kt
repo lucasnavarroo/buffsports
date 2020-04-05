@@ -9,15 +9,14 @@ import com.example.buffsports.modules.buff.model.BuffResponse
 class BuffViewModel : ViewModel() {
 
     var buff: MutableLiveData<BuffResponse.Buff> = MutableLiveData()
-    val buffVisibility: MutableLiveData<Boolean> = MutableLiveData()
+    var shouldShowBuff: MutableLiveData<Boolean> = MutableLiveData()
+    var timer = -1
 
     val onLoadFinished = SingleLiveEvent<Void>()
     val onError = SingleLiveEvent<String>()
 
     var currentBuff = 1
-
     var isPlaying = false
-    var timer = -1
 
     fun getBuff() {
         BuffBusiness.getBuff(
@@ -31,9 +30,11 @@ class BuffViewModel : ViewModel() {
                 onLoadFinished.call()
             }
         )
+
+        if (currentBuff == 5) currentBuff = 1 else currentBuff += 1
     }
 
     fun checkBuffState() {
-        buffVisibility.value = isPlaying && timer >=0
+        shouldShowBuff.value = isPlaying && timer >= 0
     }
 }

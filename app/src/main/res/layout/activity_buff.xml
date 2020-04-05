@@ -83,6 +83,7 @@
                         android:layout_marginTop="6dp"
                         android:layout_marginEnd="6dp"
                         android:textColor="@android:color/white"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="20" />
@@ -96,7 +97,7 @@
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@color/brightWhite"
                 app:cardCornerRadius="20dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                app:layout_constraintEnd_toStartOf="@+id/buffClose"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -134,7 +135,7 @@
             </androidx.cardview.widget.CardView>
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/buffClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
