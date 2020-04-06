@@ -18,7 +18,8 @@ import kotlinx.android.synthetic.main.activity_buff.*
 
 class BuffActivity : AppCompatActivity() {
 
-    private val STREAM_URL = "https://buffup-public.s3.eu-west-2.amazonaws.com/video/toronto+nba+cut+3.mp4"
+    private val STREAM_URL =
+        "https://buffup-public.s3.eu-west-2.amazonaws.com/video/toronto+nba+cut+3.mp4"
 
     private val SHOW_BUFF_DELAY: Long = 8000
     private val HIDE_BUFF_DELAY: Long = 2000
@@ -30,7 +31,10 @@ class BuffActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buff)
 
-        buffViewModel = ViewModelProvider(this, BuffViewModelFactory(BuffBusiness())).get(BuffViewModel::class.java)
+        buffViewModel = ViewModelProvider(
+            this,
+            BuffViewModelFactory(BuffBusiness())
+        ).get(BuffViewModel::class.java)
         buffAnswersAdapter = BuffAnswersAdpater(clickListener = { stopTimer() })
 
         setupRecyclerView()
@@ -109,7 +113,7 @@ class BuffActivity : AppCompatActivity() {
         buffViewModel.timer = buff.timeToShow
 
         buff.answers?.let {
-            buffAnswersAdapter.refresh(it)
+            buffAnswersAdapter.refresh(buff, it)
         }
     }
 

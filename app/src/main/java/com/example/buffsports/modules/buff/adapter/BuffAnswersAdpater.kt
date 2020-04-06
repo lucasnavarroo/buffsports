@@ -12,6 +12,7 @@ class BuffAnswersAdpater(
 ) : RecyclerView.Adapter<AnswerViewHolder>() {
 
     private var answers: List<BuffResponse.Buff.Answer> = emptyList()
+    private lateinit var buff: BuffResponse.Buff
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.buff_item, parent, false)
@@ -23,11 +24,12 @@ class BuffAnswersAdpater(
     }
 
     override fun onBindViewHolder(holder: AnswerViewHolder, position: Int) {
-        holder.bind(answers[position], clickListener)
+        holder.bind(buff, answers[position], clickListener)
     }
 
-    fun refresh(answers: List<BuffResponse.Buff.Answer>) {
+    fun refresh(buff: BuffResponse.Buff,answers: List<BuffResponse.Buff.Answer>) {
         this.answers = answers
+        this.buff = buff
         notifyDataSetChanged()
     }
 }
