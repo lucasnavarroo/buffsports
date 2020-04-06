@@ -16,9 +16,9 @@ data class BuffResponse(
         val priority: Int,
         @SerializedName("created_at")
         val createdAt: String,
-        val author: Author,
-        val question: Question,
-        val answers: List<Answer>,
+        val author: Author?,
+        val question: Question?,
+        val answers: List<Answer>?,
         val language: String
     ) {
         data class Author(

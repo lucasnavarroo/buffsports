@@ -6,28 +6,27 @@ import com.example.buffsports.core.livedata.SingleLiveEvent
 import com.example.buffsports.modules.buff.business.BuffBusiness
 import com.example.buffsports.modules.buff.model.BuffResponse
 
-class BuffViewModel : ViewModel() {
+class BuffViewModel(private val buffBusiness: BuffBusiness) : ViewModel() {
 
     var buff: MutableLiveData<BuffResponse.Buff> = MutableLiveData()
     var shouldShowBuff: MutableLiveData<Boolean> = MutableLiveData()
 
-    val onLoadFinished = SingleLiveEvent<Void>()
-    val onError = SingleLiveEvent<String>()
+    var onLoadFinished = SingleLiveEvent<Void>()
+    var onError = SingleLiveEvent<String>()
 
     var currentBuff = 1
     var isStreamPlaying = false
     var timer = -1
 
     fun getBuff() {
-        BuffBusiness.getBuff(
+        buffBusiness.getBuff(
             currentBuff.toString(),
             onSuccess = { buff ->
                 this.buff.value = buff
-                onLoadFinished.call()
             },
             onError = { errorMessage ->
                 onError.value = errorMessage
-                onLoadFinished.call()
+                onError.call()
             }
         )
 

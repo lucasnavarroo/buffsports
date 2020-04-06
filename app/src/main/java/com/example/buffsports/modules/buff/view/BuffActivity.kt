@@ -10,11 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.buffsports.R
 import com.example.buffsports.modules.buff.adapter.BuffAnswersAdpater
+import com.example.buffsports.modules.buff.business.BuffBusiness
 import com.example.buffsports.modules.buff.model.BuffResponse
 import com.example.buffsports.modules.buff.viewmodel.BuffViewModel
+import com.example.buffsports.modules.buff.viewmodel.BuffViewModelFactory
 import kotlinx.android.synthetic.main.activity_buff.*
 
 class BuffActivity : AppCompatActivity() {
+
+    private val STREAM_URL = "https://buffup-public.s3.eu-west-2.amazonaws.com/video/toronto+nba+cut+3.mp4"
 
     private val SHOW_BUFF_DELAY: Long = 8000
     private val HIDE_BUFF_DELAY: Long = 2000
@@ -26,21 +30,27 @@ class BuffActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buff)
 
-        buffViewModel = ViewModelProvider(this).get(BuffViewModel::class.java)
+        buffViewModel = ViewModelProvider(this, BuffViewModelFactory(BuffBusiness())).get(BuffViewModel::class.java)
         buffAnswersAdapter = BuffAnswersAdpater(clickListener = { stopTimer() })
 
         setupRecyclerView()
         subscribeUI()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         configVideoStream()
     }
 
     private fun configVideoStream() {
         with(videoView) {
-            setVideoPath("https://buffup-public.s3.eu-west-2.amazonaws.com/video/toronto+nba+cut+3.mp4")
+            setVideoPath(STREAM_URL)
             start()
             setOnPreparedListener() {
                 buffViewModel.isStreamPlaying = true
                 buffViewModel.checkBuffState()
+                buffViewModel.onLoadFinished.call()
             }
         }
     }
@@ -60,7 +70,7 @@ class BuffActivity : AppCompatActivity() {
         with(buffViewModel) {
 
             onLoadFinished.observe(this@BuffActivity, Observer {
-
+                loading.visibility = View.GONE
             })
 
             onError.observe(this@BuffActivity, Observer { errorMessage ->
@@ -93,12 +103,14 @@ class BuffActivity : AppCompatActivity() {
     }
 
     private fun updateBuffView(buff: BuffResponse.Buff) {
-        buffQuestion.text = buff.question.title
-        buffName.text = "${buff.author.firstName} ${buff.author.lastName}"
+        buffQuestion.text = buff.question?.title
+        buffName.text = "${buff.author?.firstName} ${buff.author?.lastName}"
         buffTimer.text = buff.timeToShow.toString()
         buffViewModel.timer = buff.timeToShow
 
-        buffAnswersAdapter.refresh(buff.answers)
+        buff.answers?.let {
+            buffAnswersAdapter.refresh(it)
+        }
     }
 
     private lateinit var countDownBuffTimer: CountDownTimer

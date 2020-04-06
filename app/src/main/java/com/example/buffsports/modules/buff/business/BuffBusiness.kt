@@ -3,7 +3,7 @@ package com.example.buffsports.modules.buff.business
 import com.example.buffsports.modules.buff.model.BuffResponse
 import com.example.buffsports.modules.buff.repository.BuffRepository
 
-object BuffBusiness {
+open class BuffBusiness {
 
     fun getBuff(
         buffId: String,
