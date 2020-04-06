@@ -24,12 +24,11 @@ class BuffAnswersAdpater(
     }
 
     override fun onBindViewHolder(holder: AnswerViewHolder, position: Int) {
-        holder.bind(buff, answers[position], clickListener)
+        holder.bind(answers[position], clickListener)
     }
 
-    fun refresh(buff: BuffResponse.Buff,answers: List<BuffResponse.Buff.Answer>) {
+    fun refresh(answers: List<BuffResponse.Buff.Answer>) {
         this.answers = answers
-        this.buff = buff
         notifyDataSetChanged()
     }
 }

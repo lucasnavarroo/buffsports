@@ -1,4 +1,4 @@
-package com.example.buffsports.modules.buff.repository
+package com.example.buffsports.modules.buff.networking
 
 import com.example.buffsports.modules.buff.model.BuffResponse
 import io.reactivex.Observable

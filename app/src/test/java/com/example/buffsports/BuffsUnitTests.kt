@@ -3,7 +3,7 @@ package com.example.buffsports
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.buffsports.core.livedata.SingleLiveEvent
-import com.example.buffsports.modules.buff.business.BuffBusiness
+import com.example.buffsports.modules.buff.repository.BuffRepository
 import com.example.buffsports.modules.buff.model.BuffResponse
 import com.example.buffsports.modules.buff.viewmodel.BuffViewModel
 import com.nhaarman.mockito_kotlin.any
@@ -22,7 +22,7 @@ class BuffsUnitTests {
     private lateinit var buffViewModel: BuffViewModel
 
     @Mock
-    lateinit var buffBusiness: BuffBusiness
+    lateinit var buffRepository: BuffRepository
 
     @Mock
     lateinit var buffObserverMock: Observer<BuffResponse.Buff>
@@ -44,7 +44,7 @@ class BuffsUnitTests {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        buffViewModel = BuffViewModel(buffBusiness)
+        buffViewModel = BuffViewModel(buffRepository)
     }
 
     @Test
@@ -77,7 +77,7 @@ class BuffsUnitTests {
     @Test
     fun `it should execute getBuff method`() {
         buffViewModel.getBuff()
-        Mockito.verify(buffBusiness, Mockito.times(1))?.getBuff("", {}, {})
+        Mockito.verify(buffRepository, Mockito.times(1))?.getBuff("", {}, {})
     }
 
     @Test

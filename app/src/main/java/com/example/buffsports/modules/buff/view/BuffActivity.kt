@@ -6,11 +6,13 @@ import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.buffsports.R
 import com.example.buffsports.modules.buff.adapter.BuffAnswersAdpater
-import com.example.buffsports.modules.buff.business.BuffBusiness
+import com.example.buffsports.modules.buff.repository.BuffRepository
 import com.example.buffsports.modules.buff.model.BuffResponse
 import com.example.buffsports.modules.buff.viewmodel.BuffViewModel
 import com.example.buffsports.modules.buff.viewmodel.BuffViewModelFactory
@@ -33,7 +35,7 @@ class BuffActivity : AppCompatActivity() {
 
         buffViewModel = ViewModelProvider(
             this,
-            BuffViewModelFactory(BuffBusiness())
+            BuffViewModelFactory(BuffRepository())
         ).get(BuffViewModel::class.java)
         buffAnswersAdapter = BuffAnswersAdpater(clickListener = { stopTimer() })
 
@@ -112,8 +114,18 @@ class BuffActivity : AppCompatActivity() {
         buffTimer.text = buff.timeToShow.toString()
         buffViewModel.timer = buff.timeToShow
 
+        Glide.with(this)
+            .load(buff.author?.image)
+            .placeholder(R.drawable.ic_account)
+            .override(
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
+            )
+            .into(personImg)
+
+
         buff.answers?.let {
-            buffAnswersAdapter.refresh(buff, it)
+            buffAnswersAdapter.refresh(it)
         }
     }
 

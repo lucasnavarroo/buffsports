@@ -3,10 +3,10 @@ package com.example.buffsports.modules.buff.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.buffsports.core.livedata.SingleLiveEvent
-import com.example.buffsports.modules.buff.business.BuffBusiness
+import com.example.buffsports.modules.buff.repository.BuffRepository
 import com.example.buffsports.modules.buff.model.BuffResponse
 
-class BuffViewModel(private val buffBusiness: BuffBusiness) : ViewModel() {
+class BuffViewModel(private val buffRepository: BuffRepository) : ViewModel() {
 
     var buff: MutableLiveData<BuffResponse.Buff> = MutableLiveData()
     var shouldShowBuff: MutableLiveData<Boolean> = MutableLiveData()
@@ -19,7 +19,7 @@ class BuffViewModel(private val buffBusiness: BuffBusiness) : ViewModel() {
     var timer = -1
 
     fun getBuff() {
-        buffBusiness.getBuff(
+        buffRepository.getBuff(
             currentBuff.toString(),
             onSuccess = { buff ->
                 this.buff.value = buff
